@@ -1,9 +1,9 @@
 <?php
-namespace frontend\models;
+namespace frontend\modules\user\models;
 
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
-use common\models\User;
+use frontend\models\User;
 
 /**
  * Password reset form
