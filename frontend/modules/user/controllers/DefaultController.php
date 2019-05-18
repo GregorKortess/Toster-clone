@@ -96,6 +96,8 @@ class DefaultController extends Controller
 
 
 
+
+
     /**
      * Signs user up.
      *
@@ -165,4 +167,8 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
+
+
 }
+
+

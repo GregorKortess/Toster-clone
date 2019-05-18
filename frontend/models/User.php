@@ -20,6 +20,18 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ * @property integer $contribution
+ * @property integer $questions
+ * @property integer $answers
+ * @property integer $solutions
+ * @property string $nickname
+ * @property string $picture
+ * @property string $firstName
+ * @property string $lastName
+ * @property string $about
+ * @property string $userStatus
+ *
+ *
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -185,5 +197,14 @@ class User extends ActiveRecord implements IdentityInterface
     public function removePasswordResetToken()
     {
         $this->password_reset_token = null;
+    }
+
+    /**
+     * get user nickname for Uri
+     * @return int|mixed|string
+     */
+    public function getNickname()
+    {
+        return ($this->nickname) ? $this->nickname : $this->getId();
     }
 }
