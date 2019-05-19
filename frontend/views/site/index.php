@@ -9,6 +9,7 @@ $this->title = 'My Yii Application';
 ?>
 <div class="site-index">
 
+    <h1 align="center">Users</h1>
     <?php foreach ($users as $user): ?>
 
         <a href="<?php echo Url::to(['user/profile/view','nickname' => $user->getNickname()])?>">
