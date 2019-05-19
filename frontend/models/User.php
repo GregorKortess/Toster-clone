@@ -38,6 +38,8 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 
+    const DEFAULT_PICTURE = '/img/default.png';
+
 
     /**
      * {@inheritdoc}
@@ -106,6 +108,7 @@ class User extends ActiveRecord implements IdentityInterface
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
+
 
         return static::findOne([
             'password_reset_token' => $token,
@@ -213,5 +216,7 @@ class User extends ActiveRecord implements IdentityInterface
         if($this->picture) {
             return Yii::$app->storage->getFile($this->picture);
         }
+        return self::DEFAULT_PICTURE;
     }
+
 }
