@@ -7,6 +7,7 @@ use Yii;
 use yii\base\Component;
 use yii\web\UploadedFile;
 use yii\helpers\FileHelper;
+use frontend\models\User;
 
 
 class Storage extends Component implements StorageInterface
@@ -73,6 +74,22 @@ class Storage extends Component implements StorageInterface
     public function getFile($filename)
     {
         return Yii::$app->params['storageUri'].$filename;
+    }
+
+    /**
+     * @param $filename
+     * @return bool
+     */
+    public function deleteFile($filename)
+    {
+        $file = $this->getStoragePath().$filename;
+
+        if (file_exists($file)) {
+           // Если файл существует, удаляем
+           return unlink($file);
+        }
+
+        return true;
     }
 
 }
