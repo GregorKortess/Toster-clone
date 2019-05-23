@@ -15,6 +15,9 @@ return [
         'user' => [
             'class' => 'frontend\modules\user\Module',
         ],
+        'question' => [
+            'class' => 'frontend\modules\question\Module',
+        ],
     ],
     'components' => [
         'request' => [
@@ -48,6 +51,7 @@ return [
             'rules' => [
                 'profile/<nickname:\w+>' => 'user/profile/view',
                 'edit/<nickname:\w+>' => 'user/profile/edit',
+                'question/<id:\d+>' => 'question/default/view',
             ],
         ],
         'storage' => [

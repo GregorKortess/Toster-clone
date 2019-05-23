@@ -15,7 +15,8 @@ use yii\helpers\Url;
 
 <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" width="150"  height="200"/>
 
-<?php if ($currentUser->equals($user)): ?>
+<?php if ($currentUser &&
+    $currentUser->equals($user)): ?>
 
 
 <a class="btn btn-default" href="<?php echo Url::to(['/user/profile/edit','nickname' => $user->getNickname()]) ?>">Редактировать профиль</a>

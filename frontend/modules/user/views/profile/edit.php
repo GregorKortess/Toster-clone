@@ -11,9 +11,9 @@ use yii\helpers\Url;
 ?>
 
 <div class="profile-edit-index">
-    <h1>Edit profile</h1>
+    <h1 align="center">Edit profile</h1>
 
-    <img src="<?php echo $user->getPicture(); ?>" id="profile-picture" width="150"  height="200"/>
+    <img  src="<?php echo $user->getPicture(); ?>" id="profile-picture" width="150"  height="200"/>
 
 
     <div class="alert alert-success" style="display: none" id="profile-image-success">Profile image updated</div>
