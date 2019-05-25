@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\Connection;
 use yii\helpers\FormatConverter;
 
 /**
@@ -49,6 +50,7 @@ class Questions extends \yii\db\ActiveRecord
         return Yii::$app->storage->getFile($this->filename);
     }
 
+
     /**
      * Получить автора вопроса
      * @return \yii\db\ActiveQuery
@@ -57,4 +59,52 @@ class Questions extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(),['id' => 'user_id']);
     }
+
+
+    /**
+     * @param User $user
+     */
+    public function like(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->sadd("question:{$this->getId()}:likes",$user->getId());
+        $redis->sadd("user:{$user->getId()}:likes",$this->getId());
+    }
+
+
+    /**
+     * @param User $user
+     */
+    public function unLike(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->srem("question:{$this->getId()}:likes",$user->getId());
+        $redis->srem("user:{$user->getId()}:likes",$this->getId());
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countLikes()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("question:{$this->getId()}:likes");
+    }
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function isLikedBy(User $user)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->sismember("question:{$this->getId()}:likes", $user->getId());
+    }
+
 }

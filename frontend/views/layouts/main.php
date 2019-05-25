@@ -10,6 +10,8 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+$currentUser = Yii::$app->user->identity;
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -42,10 +44,12 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/user/default/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/user/default/login']];
     } else {
+        $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile/view','nickname' => $currentUser->getNickname()]];
+        $menuItems[] = ['label' => 'Задать вопрос', 'url' => ['/question/default/create']];
         $menuItems[] = '<li>'
             . Html::beginForm(['/user/default/logout'], 'post')
             . Html::submitButton(
-                'Logout (' . Yii::$app->user->identity->username . ')',
+                'Выход (' . Yii::$app->user->identity->username . ')',
                 ['class' => 'btn btn-link logout']
             )
             . Html::endForm()

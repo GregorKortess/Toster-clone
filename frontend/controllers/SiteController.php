@@ -6,6 +6,7 @@ use frontend\models\User;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
+use frontend\models\Questions;
 
 
 /**
@@ -33,11 +34,13 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $users = User::find()->all();
+        $questions = Questions::find()->all();
         return $this->render('index',[
-            'users' => $users,
+            'questions' => $questions,
         ]);
     }
+
+
 
 
 }

@@ -2,9 +2,11 @@
 
 namespace frontend\modules\question\controllers;
 
+use frontend\models\User;
 use yii;
 use yii\web\Controller;
 use yii\web\UploadedFile;
+use yii\web\Response;
 use frontend\modules\question\models\forms\QuestionForm;
 use frontend\models\Questions;
 
@@ -41,9 +43,59 @@ class DefaultController extends Controller
 
     public function actionView($id)
     {
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+
         return $this->render('view',[
             'question' => $this->findQuestion($id),
+            'currentUser' => $currentUser,
         ]);
+    }
+
+    public function actionLike()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        Yii::$app->response->format = Response:: FORMAT_JSON;
+
+
+        $id = Yii::$app->request->post('id');
+        $question = $this->findQuestion($id);
+
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+
+        $question->like($currentUser);
+
+        return [
+            'success' => true,
+            'likesCount' => $question->countLikes(),
+        ];
+    }
+
+    public function actionUnlike()
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        Yii::$app->response->format = Response:: FORMAT_JSON;
+
+
+        $id = Yii::$app->request->post('id');
+        $question = $this->findQuestion($id);
+
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+
+        $question->unLike($currentUser);
+
+        return [
+            'success' => true,
+            'likesCount' => $question->countLikes(),
+        ];
     }
 
     private function findQuestion($id)

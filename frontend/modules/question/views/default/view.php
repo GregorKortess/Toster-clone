@@ -5,6 +5,7 @@
 $user = $question->user;
 
 use yii\helpers\Html;
+use yii\web\JqueryAsset;
 use yii\helpers\Url;
 
 ?>
@@ -38,6 +39,27 @@ use yii\helpers\Url;
         <hr>
     </div>
 
-
-
 </div>
+
+    <hr>
+
+    <div class="col-md-12">
+        Likes: <span class="likes-count"><?php echo $question->countLikes(); ?></span>
+
+
+        <a href="#" class="btn btn-default button-like" style="<?php echo ($currentUser && $question->isLikedBy($currentUser)) ? "display:none" : "" ?>" data-id="<?php echo $question->id ?>">
+            Like&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-up"></span>
+        </a>
+        <a href="#" class="btn btn-default button-unlike" style="<?php echo ($currentUser && $question->isLikedBy($currentUser)) ? "" : "display:none" ?>" data-id="<?php echo $question->id ?>">
+            Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
+        </a>
+    </div>
+
+
+
+
+<?php $this->registerJsFile('@web/js/likes.js',[
+        'depends' => JqueryAsset::className(),
+]);
+
+
