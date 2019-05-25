@@ -18,6 +18,9 @@ return [
         'question' => [
             'class' => 'frontend\modules\question\Module',
         ],
+        'tags' => [
+            'class' => 'frontend\modules\tags\Module',
+        ],
     ],
     'components' => [
         'request' => [
@@ -51,7 +54,11 @@ return [
             'rules' => [
                 'profile/<nickname:\w+>' => 'user/profile/view',
                 'edit/<nickname:\w+>' => 'user/profile/edit',
+                'question/create'  => 'question/default/create',
                 'question/<id:\d+>' => 'question/default/view',
+                'tag/<id:\d+>' => 'tags/default/view',
+                'tags' => 'tags/default/index',
+                'tags/create' => 'tags/default/create',
             ],
         ],
         'storage' => [

@@ -44,6 +44,7 @@ AppAsset::register($this);
         $menuItems[] = ['label' => 'Signup', 'url' => ['/user/default/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/user/default/login']];
     } else {
+        $menuItems[] = ['label' => 'Список тэгов', 'url' => ['/tags/default/index',]];
         $menuItems[] = ['label' => 'Мой профиль', 'url' => ['/user/profile/view','nickname' => $currentUser->getNickname()]];
         $menuItems[] = ['label' => 'Задать вопрос', 'url' => ['/question/default/create']];
         $menuItems[] = '<li>'
