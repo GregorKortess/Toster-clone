@@ -19,7 +19,7 @@ class TagForm extends Model
         return [
             [['picture'], 'file',
                 'skipOnEmpty' => false,
-                'extensions' => ['jpg', 'png'],
+                'extensions' => ['jpg', 'png','jpeg'],
                 'checkExtensionByMimeType' => true,
                 'maxSize' => $this->getMaxFileSize()],
             [['name', 'description'], 'required'],
@@ -28,6 +28,9 @@ class TagForm extends Model
 
     }
 
+    /**
+     * @return bool
+     */
     public function save()
     {
         if ($this->validate()) {

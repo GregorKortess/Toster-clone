@@ -19,6 +19,7 @@ class QuestionForm extends Model
     public $description;
     public $question;
     public $difficulty;
+    public $tag;
 
 
     public function rules()
@@ -31,7 +32,7 @@ class QuestionForm extends Model
               'maxSize' => $this->getMaxFileSize()],
             [['description'],'string','max' => self::MAX_DESCRIPTION_LENGHT],
             [['question'],'string','max' => self::MAX_QUESTION_LENGHT],
-            [['question','description','difficulty'],'required'],
+            [['question','description','difficulty','tag'],'required'],
         ];
     }
 
@@ -51,11 +52,13 @@ class QuestionForm extends Model
             if ($this->picture) {
                 $question->filename = Yii::$app->storage->saveUploadedFile($this->picture);
             }
+
             $question->question = $this->question;
             $question->description = $this->description;
             $question->difficulty = $this->difficulty;
             $question->created_at = time();
             $question->user_id = $this->user->getId();
+            $question->tag = $this->tag;
 
             return $question->save(false);
         }

@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "tags".
@@ -35,4 +36,12 @@ class Tags extends \yii\db\ActiveRecord
             'description' => 'Description',
         ];
     }
+
+    // Получить список тэгов для формы создания вопроса
+    public  static function getTagsList()
+    {
+        return ArrayHelper::map(self::find()->orderBy('name')->all(), 'id', 'name');
+    }
+
+
 }

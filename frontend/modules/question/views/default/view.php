@@ -1,8 +1,10 @@
 <?php
 /* @var $this \yii\web\View */
 /* @var $question \frontend\models\Questions */
+/* @var $tag \frontend\models\Tags */
 
 $user = $question->user;
+
 
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
@@ -19,14 +21,17 @@ use yii\helpers\Url;
     </div>
 
     <div class="col-md-12">
-        ТЕГИ:
+        <b>Тэг:</b>
+        <br>
+        <img src="<?php echo Yii::$app->storage->getFile($tag->picture) ?>" width="25" height="25">
+        <a href="<?php echo Url::to(['/tags/default/view','id' => $tag->id]) ?>"><?php echo $tag->name ?></a>
         <div class="h3"><?php echo Html::encode($question->question); ?></div>
     </div>
     <div class="col-md-12">
         <?php echo Html::encode($question->description) ?>
         <br><br>
         <?php if($question->filename): ?>
-        <img src="<?php echo $question->getImage();?>" width="350" height="400">
+        <img src="<?php echo $question->getImage();?>" width="800" height="600">
         <?php endif; ?>
     </div>
 

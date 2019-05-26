@@ -2,6 +2,7 @@
 
 namespace frontend\modules\question\controllers;
 
+use frontend\models\Tags;
 use frontend\models\User;
 use yii;
 use yii\web\Controller;
@@ -40,18 +41,31 @@ class DefaultController extends Controller
         ]);
     }
 
-
+    /**
+     * @param $id
+     * @return string
+     * @throws yii\web\NotFoundHttpException
+     */
     public function actionView($id)
     {
         /* @var $currentUser User */
         $currentUser = Yii::$app->user->identity;
 
+        $question = $this->findQuestion($id);
+
+        $tag = $this->findTag($question->tag);
+
         return $this->render('view',[
-            'question' => $this->findQuestion($id),
+            'question' => $question,
             'currentUser' => $currentUser,
+            'tag' => $tag,
         ]);
     }
 
+    /**
+     * @return array|Response
+     * @throws yii\web\NotFoundHttpException
+     */
     public function actionLike()
     {
         if (Yii::$app->user->isGuest) {
@@ -75,6 +89,10 @@ class DefaultController extends Controller
         ];
     }
 
+    /**
+     * @return array|Response
+     * @throws yii\web\NotFoundHttpException
+     */
     public function actionUnlike()
     {
         if (Yii::$app->user->isGuest) {
@@ -105,4 +123,13 @@ class DefaultController extends Controller
         }
         throw new yii\web\NotFoundHttpException();
     }
+
+    private function findTag($id)
+    {
+        if ($tags = Tags::findOne($id)) {
+            return $tags;
+        }
+        throw new yii\web\NotFoundHttpException();
+    }
+
 }

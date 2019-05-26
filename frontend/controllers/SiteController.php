@@ -34,7 +34,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $questions = Questions::find()->all();
+        $questions = Questions::find()->orderBy(['created_at' => SORT_DESC])->all();
         return $this->render('index',[
             'questions' => $questions,
         ]);

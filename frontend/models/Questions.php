@@ -16,6 +16,8 @@ use yii\helpers\FormatConverter;
  * @property string $description
  * @property int $created_at
  * @property string $difficulty
+ * @property string $tag
+
  */
 class Questions extends \yii\db\ActiveRecord
 {
