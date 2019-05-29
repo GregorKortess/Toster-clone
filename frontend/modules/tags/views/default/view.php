@@ -19,6 +19,8 @@ use yii\helpers\Url;
 </div>
 <p align="center"><?php echo $tag->description ?></p>
 
+<p align="center">ПОДПИСЩИКОВ || ВОПРОСОВ: <?php echo count($questions) ?> || РЕШЕНО:</p>
+
 <hr>
 
 

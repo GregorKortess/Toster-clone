@@ -79,7 +79,7 @@ class DefaultController extends Controller
 
     private function findQuestions($id)
     {
-        if ($question = Questions::find($id)->orderBy(['created_at' => SORT_DESC])->all()) {
+        if ($question = Questions::find($id)->where(['tag' => $id])->orderBy(['created_at' => SORT_DESC])->all()) {
             return $question;
         }
         throw new yii\web\NotFoundHttpException();

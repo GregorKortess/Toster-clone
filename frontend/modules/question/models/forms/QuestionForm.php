@@ -10,7 +10,7 @@ use frontend\models\User;
 
 class QuestionForm extends Model
 {
-    const MAX_QUESTION_LENGHT = 100;
+    const MAX_QUESTION_LENGHT = 200;
     const MAX_DESCRIPTION_LENGHT = 3000;
 
     private $user;

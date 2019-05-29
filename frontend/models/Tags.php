@@ -43,5 +43,10 @@ class Tags extends \yii\db\ActiveRecord
         return ArrayHelper::map(self::find()->orderBy('name')->all(), 'id', 'name');
     }
 
+//    public static function getQuestions()
+//    {
+//        return
+//    }
+
 
 }
