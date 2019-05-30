@@ -20,6 +20,8 @@ use yii\helpers\Url;
 
 
 <a class="btn btn-default" href="<?php echo Url::to(['/user/profile/edit','nickname' => $user->getNickname()]) ?>">Редактировать профиль</a>
+<!--    <div class="profile-following">-->
+        <a  class="btn btn-default" href="#" data-toggle="modal" data-target="#myModal1">Подписки на тэги: <?php echo $user->countSubscriptions() ?></a>
 
 <?php endif; ?>
 
@@ -43,9 +45,31 @@ use yii\helpers\Url;
 
 <br><br>
 
-
-
-
-
-
-<hr>
+<!-- Modal subscriptions -->
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Подписки на теги</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                   <?php foreach ($user->getSubscriptions() as $subscription): ?>
+                   <div class="col-md-12">
+                       <a href="<?php echo Url::to('/tag/'.$subscription['id']) ?>">
+                           <img src="<?php echo Yii::$app->storage->getFile($subscription['picture']) ?>" alt="img" width="15" height="15">
+                        <?php echo Html::encode($subscription['name']); ?>
+                       </a>
+                   </div>
+                   
+                   <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal subscriptions -->

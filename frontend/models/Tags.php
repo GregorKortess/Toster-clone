@@ -3,6 +3,7 @@
 namespace frontend\models;
 
 use Yii;
+use yii\db\Connection;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -38,15 +39,46 @@ class Tags extends \yii\db\ActiveRecord
     }
 
     // Получить список тэгов для формы создания вопроса
-    public  static function getTagsList()
+    public static function getTagsList()
     {
         return ArrayHelper::map(self::find()->orderBy('name')->all(), 'id', 'name');
     }
 
-//    public static function getQuestions()
-//    {
-//        return
-//    }
+    public function getQuestions()
+    {
+        return $this->hasMany(Questions::className(),['tag' => 'id'])->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getFollowers()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $key = "tag:{$this->getId()}:followers";
+        $ids = $redis->smembers($key);
+        return User::find()->select('id, nickname , picture , username')->where(['id' => $ids])->asArray()->all();
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countFollowers()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("tag:{$this->getId()}:followers");
+    }
 
 
 }

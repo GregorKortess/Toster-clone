@@ -69,10 +69,13 @@ class DefaultController extends Controller
     }
 
 
+
+
+
     private function findTag($id)
     {
-        if ($user = Tags::findOne($id)) {
-            return $user;
+        if ($tag = Tags::findOne($id)) {
+            return $tag;
         }
         throw new yii\web\NotFoundHttpException();
     }

@@ -1,10 +1,12 @@
 <?php
 namespace frontend\models;
 
+use phpDocumentor\Reflection\DocBlock\Tag;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\db\Connection;
 use yii\web\IdentityInterface;
 
 /**
@@ -211,6 +213,7 @@ class User extends ActiveRecord implements IdentityInterface
         return ($this->nickname) ? $this->nickname : $this->getId();
     }
 
+
     public function getPicture()
     {
         if($this->picture) {
@@ -231,6 +234,53 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return false;
     }
+
+    /**
+     * @param $tag
+     */
+    public function followTag($tag)
+    {
+
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->sadd("user:{$this->getId()}:subscriptions",$tag->getId());
+        $redis->sadd("tag:{$tag->getId()}:followers",$this->getId());
+    }
+
+    /**
+     * @param $tag
+     */
+    public function unfollowTag($tag)
+    {
+
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $redis->srem("user:{$this->getId()}:subscriptions",$tag->getId());
+        $redis->srem("tag:{$tag->getId()}:followers",$this->getId());
+    }
+
+    /**
+     * @return array|ActiveRecord[]
+     */
+    public function getSubscriptions()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        $key = "user:{$this->getId()}:subscriptions";
+        $ids = $redis->smembers($key);
+        return Tags::find()->select('id, name,picture')->where(['id' => $ids])->orderBy('name')->asArray()->all();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function countSubscriptions()
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+        return $redis->scard("user:{$this->getId()}:subscriptions");
+    }
+
 
 
 }

@@ -31,7 +31,7 @@ use yii\helpers\Url;
         <?php echo Html::encode($question->description) ?>
         <br><br>
         <?php if($question->filename): ?>
-        <img src="<?php echo $question->getImage();?>" width="800" height="600">
+        <img src="<?php echo $question->getImage();?>" >
         <?php endif; ?>
     </div>
 

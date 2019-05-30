@@ -2,6 +2,7 @@
 
 namespace frontend\modules\user\controllers;
 
+use frontend\models\Tags;
 use Yii;
 use frontend\modules\user\models\LoginForm;
 use frontend\modules\user\models\PasswordResetRequestForm;
@@ -167,6 +168,49 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionSubscribe($id)
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        /* @var $currentUser  User */
+        $currentUser = Yii::$app->user->identity;
+
+        $tag = $this->findTag($id);
+
+        $currentUser->followTag($tag);
+
+        Yii::$app->session->setFlash('success','Вы подписались на тэг');
+        return $this->redirect('/tag/'.$id);
+    }
+
+    public function actionUnsubscribe($id)
+    {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        /* @var $currentUser  User */
+        $currentUser = Yii::$app->user->identity;
+
+        $tag = $this->findTag($id);
+
+        $currentUser->unfollowTag($tag);
+
+        Yii::$app->session->setFlash('success','Подписка отменена');
+        return $this->redirect('/tag/'.$id);
+    }
+
+    private function findTag($id)
+    {
+        if ($tag = Tags::findOne($id)) {
+            return $tag;
+        }
+        throw new yii\web\NotFoundHttpException();
+    }
+
 
 }
 
