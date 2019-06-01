@@ -109,4 +109,14 @@ class Questions extends \yii\db\ActiveRecord
         return $redis->sismember("question:{$this->getId()}:likes", $user->getId());
     }
 
+    public function getUserFeed($currentUser)
+    {
+        /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+
+        $ids = $redis->smembers("user:{$currentUser->id}:subscriptions");
+
+        return self::find()->where(['tag' => $ids])->select('filename,id,question,created_at')->orderBy('created_at',SORT_ASC)->all();
+    }
+
 }

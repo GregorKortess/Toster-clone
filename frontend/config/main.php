@@ -59,6 +59,7 @@ return [
                 'tag/<id:\d+>' => 'tags/default/view',
                 'tags' => 'tags/default/index',
                 'tags/create' => 'tags/default/create',
+                'my/feed' => 'user/profile/feed'
             ],
         ],
         'storage' => [

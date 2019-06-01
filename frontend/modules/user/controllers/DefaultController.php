@@ -3,6 +3,7 @@
 namespace frontend\modules\user\controllers;
 
 use frontend\models\Tags;
+use frontend\models\User;
 use Yii;
 use frontend\modules\user\models\LoginForm;
 use frontend\modules\user\models\PasswordResetRequestForm;
@@ -168,6 +169,8 @@ class DefaultController extends Controller
             'model' => $model,
         ]);
     }
+
+
 
     public function actionSubscribe($id)
     {

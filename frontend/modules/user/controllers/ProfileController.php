@@ -3,6 +3,7 @@
 
 namespace frontend\modules\user\controllers;
 
+use frontend\models\Questions;
 use Yii;
 use frontend\models\User;
 use yii\web\Controller;
@@ -109,6 +110,21 @@ class ProfileController extends Controller
         }
 
         return $this->redirect(['/user/profile/view', 'nickname' => $currentUser->getNickname()]);
+    }
+
+
+    public function actionFeed()
+    {
+        /* @var $currentUser User */
+        $currentUser = Yii::$app->user->identity;
+
+        $model = new Questions();
+
+        $questions = $model->getUserFeed($currentUser);
+
+        return $this->render('userFeed',[
+            'questions' => $questions,
+        ]);
     }
 
     /**
