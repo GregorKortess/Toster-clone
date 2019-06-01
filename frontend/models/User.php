@@ -281,6 +281,11 @@ class User extends ActiveRecord implements IdentityInterface
         return $redis->scard("user:{$this->getId()}:subscriptions");
     }
 
-
+    public function isFollowed($tag)
+    {
+       /* @var $redis Connection */
+        $redis = Yii::$app->redis;
+       return  $redis->sismember("user:{$this->getId()}:subscriptions", $tag->id);
+    }
 
 }

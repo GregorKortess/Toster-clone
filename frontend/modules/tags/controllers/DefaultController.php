@@ -25,6 +25,7 @@ class DefaultController extends Controller
 
         return $this->render('index',[
             'tags' => $tags,
+            'currentUser' => Yii::$app->user->identity,
         ]);
     }
 
@@ -43,6 +44,7 @@ class DefaultController extends Controller
         return $this->render('view',[
             'tag' => $this->findTag($id),
             'questions' => $questions,
+            'currentUser' => Yii::$app->user->identity,
         ]);
     }
 

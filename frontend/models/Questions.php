@@ -116,7 +116,7 @@ class Questions extends \yii\db\ActiveRecord
 
         $ids = $redis->smembers("user:{$currentUser->id}:subscriptions");
 
-        return self::find()->where(['tag' => $ids])->select('filename,id,question,created_at')->orderBy('created_at',SORT_ASC)->all();
+        return self::find()->where(['tag' => $ids])->select('filename,id,question,created_at,difficulty')->orderBy('created_at',SORT_ASC)->all();
     }
 
 }

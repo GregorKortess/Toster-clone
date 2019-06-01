@@ -26,7 +26,11 @@ use yii\helpers\Url;
     <p align="center">Вопросов:<?php echo $tag->getQuestions(); ?></p>
     </a>
 
-    <p align="center"><a href="#" class="btn btn-default">Подписаться</a></p>
+    <p align="center"><?php  if (!$currentUser->isFollowed($tag)): ?>
+        <a href="<?php echo Url::to(['/user/default/subscribe', 'id' => $tag->id]) ?>" class="btn btn-default">Подписаться</a>
+    <?php  else: ?>
+        <a href="<?php echo Url::to(['/user/default/unsubscribe', 'id' => $tag->id]) ?>" class="btn btn-default">Отписаться</a>
+    <?php  endif; ?></p>
     <p align="center"><?php echo $tag->description ?></p>
 
     <hr>

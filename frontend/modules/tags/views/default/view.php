@@ -1,6 +1,7 @@
 <?php
 /* @var $this \yii\web\View */
 /* @var $tag \frontend\models\Tags */
+/* @var $currentUser \frontend\models\User */
 
 /* @var $questions \frontend\models\Questions */
 
@@ -21,8 +22,11 @@ use yii\helpers\Url;
 
 <p align="center">ПОДПИСЩИКОВ: <?php echo $tag->countFollowers(); ?> || ВОПРОСОВ: <?php echo count($questions) ?> || РЕШЕНО:</p>
 <p align="center">
+    <?php  if (!$currentUser->isFollowed($tag)): ?>
     <a href="<?php echo Url::to(['/user/default/subscribe', 'id' => $tag->id]) ?>" class="btn btn-default">Подписаться</a>
+    <?php  else: ?>
     <a href="<?php echo Url::to(['/user/default/unsubscribe', 'id' => $tag->id]) ?>" class="btn btn-default">Отписаться</a>
+    <?php  endif; ?>
 </p>
 
 <p align="center">
