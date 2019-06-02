@@ -4,6 +4,8 @@ namespace frontend\modules\question\controllers;
 
 use frontend\models\Tags;
 use frontend\models\User;
+use frontend\modules\question\models\Answers;
+use frontend\modules\question\models\forms\AnswersForm;
 use yii;
 use yii\web\Controller;
 use yii\web\UploadedFile;
@@ -24,6 +26,9 @@ class DefaultController extends Controller
      */
     public function actionCreate()
     {
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
 
         $model = new QuestionForm(Yii::$app->user->identity);
 
@@ -48,10 +53,30 @@ class DefaultController extends Controller
      */
     public function actionView($id)
     {
+
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->setFlash('danger', 'Вы должны быть зарегестрированым что бы просматривать вопросы');
+            return $this->redirect(['/user/default/login']);
+        }
+
         /* @var $currentUser User */
         $currentUser = Yii::$app->user->identity;
 
         $question = $this->findQuestion($id);
+        $model = new AnswersForm($currentUser, $question);
+
+        $answersModel = new Answers();
+        $answers = $answersModel->getAnswers($id);
+
+        if($model->load(Yii::$app->request->post())) {
+
+            $model->picture = UploadedFile::getInstance($model, 'picture');
+
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Комментарий добавлен');
+                return $this->redirect('/question/' . $id . '#bottom');
+            }
+        }
 
         $tag = $this->findTag($question->tag);
 
@@ -59,6 +84,8 @@ class DefaultController extends Controller
             'question' => $question,
             'currentUser' => $currentUser,
             'tag' => $tag,
+            'model' => $model,
+            'answers' => $answers,
         ]);
     }
 
