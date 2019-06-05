@@ -62,4 +62,9 @@ class Answers extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(),['id' => 'author_id']);
     }
+
+    public function deleteAnswer($id)
+    {
+        return Answers::deleteAll(['id' => $id]);
+    }
 }

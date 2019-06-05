@@ -47,6 +47,8 @@ class DefaultController extends Controller
     }
 
     /**
+     * Генерирует просмотр вопроса
+     *
      * @param $id
      * @return string
      * @throws yii\web\NotFoundHttpException
@@ -65,6 +67,7 @@ class DefaultController extends Controller
         $question = $this->findQuestion($id);
         $model = new AnswersForm($currentUser, $question);
 
+        // Модель для  формы ответов и список всех ответов под вопросом
         $answersModel = new Answers();
         $answers = $answersModel->getAnswers($id);
 
@@ -142,6 +145,26 @@ class DefaultController extends Controller
             'likesCount' => $question->countLikes(),
         ];
     }
+
+    public function actionDeleteAnswer()
+    {
+
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect(['/user/default/login']);
+        }
+
+        Yii::$app->response->format = Response:: FORMAT_JSON;
+
+        $id = Yii::$app->request->post('id');
+        $QuestionId = Yii::$app->request->post('QuestionId');
+
+        $answer = new Answers();
+        $answer->deleteAnswer($id);
+
+        Yii::$app->session->setFlash('success','комментарий удалён');
+        return $this->redirect('/question/'.$QuestionId);
+    }
+
 
     private function findQuestion($id)
     {

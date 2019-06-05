@@ -4,7 +4,7 @@
 /* @var $tag \frontend\models\Tags */
 /* @var $model \frontend\modules\question\models\forms\AnswersForm */
 /* @var $answers \frontend\modules\question\models\Answers */
-
+/* @var $currentUser \frontend\models\User*/
 $user = $question->user;
 
 
@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-
+<!--Вопрос-->
     <div class="row">
         <div class="col-md-12">
             <a href="<?php echo Url::to(['/user/profile/view', 'nickname' => $user->getNickname()]) ?>"><?php echo Html::encode($user->username); ?></a>
@@ -48,8 +48,9 @@ use yii\widgets\ActiveForm;
         </div>
 
     </div>
+<!--Вопрос-->
 
-
+<!--Лайки-->
     <div class="col-md-12">
         Likes: <span class="likes-count"><?php echo $question->countLikes(); ?></span>
 
@@ -61,39 +62,55 @@ use yii\widgets\ActiveForm;
             Unlike&nbsp;&nbsp;<span class="glyphicon glyphicon-thumbs-down"></span>
         </a>
     </div>
+<!--Лайки-->
 
+<!-- Список комментариев -->
     <h3 align="center">Ответы на вопрос</h3>
-
-
-    <b class="h3">Ваш ответ на вопрос</b>
 
     <div class="col-md-12">
         <?php foreach ($answers as $answer): ?>
             <hr>
-
+                <?php if ($answer->user->picture): ?>
             <img src="<?php echo Yii::$app->storage->getFile($answer->user->picture) ?>" width="45" height="45">
+        <?php else: ?>
+                <img src="/img/default.png" width="45" height="45">
+            <?php endif; ?>
+
         <b><?php echo $answer->user->username ?></b>
         <i><?php echo $answer->user->userStatus ?></i>
             <br>
-             <?php echo $answer->text; ?>
+            <?php echo $answer->text; ?>
+
 
         <?php if($answer->picture): ?>
                 <br>
                 <img src="<?php echo Yii::$app->storage->getFile($answer->picture) ?> " width="450" height="600">
         <?php endif; ?>
+            <br><br>
+
+        <?php if ($currentUser->equals($answer->user)) :?>
+            <a  class="btn btn-default button-delete" href="#" data-QuestionId="<?php echo $question->id ?>" data-id="<?php echo $answer->id; ?>">Удалить ответ</a>
+        <?php endif; ?>
+
 
         <?php endforeach; ?>
+        <br><br>
     </div>
+<!--Список комментариев -->
+
+<!--Создать комментарий-->
+    <b class="h3">Ваш ответ на вопрос</b>
+
 
 
     <div class="col-md-12">
         <?php $form = ActiveForm::begin() ?>
 
-        <div class="h4">Текст</div>
+        <div class="h4">Текст:</div>
         <?php echo $form->field($model, 'text')->label(false)->textarea(['rows' => 8]); ?>
 
 
-        <div class="h4">Изображение</div>
+        <div class="h4">Изображение:</div>
         <small>Вы можете добавить изображение для более точного ответа</small>
         <br>
         <?php echo $form->field($model, 'picture')->label(false)->fileInput(['class' => 'btn btn-default']); ?>
@@ -104,12 +121,17 @@ use yii\widgets\ActiveForm;
         <?php ActiveForm::end(); ?>
 
     </div>
+<!--Создать комментарий-->
 
     <div id="bottom"></div>
 
 
 <?php $this->registerJsFile('@web/js/likes.js', [
     'depends' => JqueryAsset::className(),
-]);
+]); ?>
+
+<?php $this->registerJsFile('@web/js/deleteAnswer.js', [
+    'depends' => JqueryAsset::className(),
+]); ?>
 
 
