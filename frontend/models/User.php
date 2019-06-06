@@ -288,4 +288,7 @@ class User extends ActiveRecord implements IdentityInterface
        return  $redis->sismember("user:{$this->getId()}:subscriptions", $tag->id);
     }
 
+
+
+
 }

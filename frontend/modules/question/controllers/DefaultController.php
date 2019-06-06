@@ -146,6 +146,9 @@ class DefaultController extends Controller
         ];
     }
 
+    /**
+     * @return Response
+     */
     public function actionDeleteAnswer()
     {
 
@@ -155,11 +158,12 @@ class DefaultController extends Controller
 
         Yii::$app->response->format = Response:: FORMAT_JSON;
 
+        $currentUser = Yii::$app->user->identity;
         $id = Yii::$app->request->post('id');
         $QuestionId = Yii::$app->request->post('QuestionId');
 
         $answer = new Answers();
-        $answer->deleteAnswer($id);
+        $answer->deleteAnswer($id,$currentUser);
 
         Yii::$app->session->setFlash('success','комментарий удалён');
         return $this->redirect('/question/'.$QuestionId);

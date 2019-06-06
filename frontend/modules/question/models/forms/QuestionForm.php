@@ -27,7 +27,7 @@ class QuestionForm extends Model
         return [
           [['picture'],'file',
               'skipOnEmpty' => true,
-              'extensions' => ['jpg','png'],
+              'extensions' => ['jpg','png','jpeg'],
               'checkExtensionByMimeType' => true,
               'maxSize' => $this->getMaxFileSize()],
             [['description'],'string','max' => self::MAX_DESCRIPTION_LENGHT],
@@ -59,6 +59,7 @@ class QuestionForm extends Model
             $question->created_at = time();
             $question->user_id = $this->user->getId();
             $question->tag = $this->tag;
+            $this->user->updateCounters(['questions' => 1]);
 
             return $question->save(false);
         }

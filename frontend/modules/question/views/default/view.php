@@ -7,7 +7,7 @@
 /* @var $currentUser \frontend\models\User*/
 $user = $question->user;
 
-
+use frontend\modules\question\models\Answers;
 use yii\helpers\Html;
 use yii\web\JqueryAsset;
 use yii\helpers\Url;
@@ -40,9 +40,16 @@ use yii\widgets\ActiveForm;
 
         <div class="col-md-12">
             <hr>
-            <em><?php echo Yii::$app->formatter->asDatetime($question->created_at) ?></em>
+            <?php if($question->difficulty == 'Лёгкий'): ?>
+            <h3 class="text-success"><?php echo Html::encode($question->difficulty); ?></h3>
+            <?php elseif($question->difficulty == 'Средний'): ?>
+                <h3 class="text-warning"><?php echo Html::encode($question->difficulty); ?></h3>
+            <?php else: ?>
+                <h3 class="text-danger"><?php echo Html::encode($question->difficulty); ?></h3>
+            <?php endif; ?>
+            <b>Ответы:<?php echo Answers::countAnswers($question->getId()) ?></b>
             <br>
-            <b><?php echo Html::encode($question->difficulty); ?></b>
+            <b><?php echo Yii::$app->formatter->asDatetime($question->created_at) ?></b>
 
             <hr>
         </div>
@@ -125,6 +132,7 @@ use yii\widgets\ActiveForm;
 
     <div id="bottom"></div>
 
+<!--Зависимости-->
 
 <?php $this->registerJsFile('@web/js/likes.js', [
     'depends' => JqueryAsset::className(),
@@ -133,5 +141,8 @@ use yii\widgets\ActiveForm;
 <?php $this->registerJsFile('@web/js/deleteAnswer.js', [
     'depends' => JqueryAsset::className(),
 ]); ?>
+
+<!--Зависимости-->
+
 
 

@@ -31,18 +31,18 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' =>  Yii::$app->name,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'На главную', 'url' => ['/site/index']],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/user/default/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/user/default/login']];
+        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/user/default/signup']];
+        $menuItems[] = ['label' => 'Логин', 'url' => ['/user/default/login']];
     } else {
         $menuItems[] = ['label' => 'Список тэгов', 'url' => ['/tags/default/index',]];
         $menuItems[] = ['label' => 'Моя лента', 'url' => ['/user/profile/feed',]];

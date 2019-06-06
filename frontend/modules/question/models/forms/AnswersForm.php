@@ -47,6 +47,7 @@ class AnswersForm extends Model
                 $answer->filename = Yii::$app->storage->saveUploadedFile($this->picture);
             }
             $answer->created_at = time();
+            $this->user->updateCounters(['answers' => 1]);
 
             return $answer->save(false);
         }

@@ -54,6 +54,11 @@ class Answers extends \yii\db\ActiveRecord
         return Answers::find()->where(['question_id' => $id])->orderBy('created_at')->all();
     }
 
+    public  static function countAnswers($id)
+    {
+        return Answers::find()->where(['question_id' => $id])->orderBy('created_at')->count();
+    }
+
     /**
      * Получить автора ответа
      * @return \yii\db\ActiveQuery
@@ -63,8 +68,11 @@ class Answers extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(),['id' => 'author_id']);
     }
 
-    public function deleteAnswer($id)
+
+    public function deleteAnswer($id,$currentUser)
     {
+        /* @var $currentUser User */
+        $currentUser->updateCounters(['answers' => -1]);
         return Answers::deleteAll(['id' => $id]);
     }
 }

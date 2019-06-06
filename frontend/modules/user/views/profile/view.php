@@ -27,11 +27,11 @@ use yii\helpers\Url;
 
 <br><br>
 
-<h2 align="center"><?php echo $user->solutions ?>
-    <?php echo $user->answers ?>
-    <?php echo $user->questions ?>
-    <?php echo $user->contribution ?>
-</h2>
+<h3 align="center">Решений:<?php echo $user->solutions ?>%
+    |Ответов:<?php echo $user->answers ?>
+    |Вопросов:<?php echo $user->questions ?>
+    |Вклад:<?php echo $user->contribution ?>
+</h3>
 <i><?php echo $user->userStatus ?></i>
 <br>
 <b>Имя:<?php echo $user->firstName ?></b>
