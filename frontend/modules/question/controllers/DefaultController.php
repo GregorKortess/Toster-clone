@@ -169,11 +169,42 @@ class DefaultController extends Controller
         return $this->redirect('/question/'.$QuestionId);
     }
 
+    /**
+     * Отметить ответ как решение.
+     * В методе Solution изменяем статус вопроса, ответа и добавляем +1 к решениям автора ответа
+     *
+     * @throws yii\web\NotFoundHttpException
+     */
+    public function actionSolution()
+    {
+        Yii::$app->response->format = Response:: FORMAT_JSON;
+
+        $questionId = Yii::$app->request->post('QuestionId');
+        $answerId = Yii::$app->request->post('id');
+        $userId = Yii::$app->request->post('UserId');
+
+        $answer = $this->findAnswer($answerId);
+        $user = $this->findUser($userId);
+
+        $question = $this->findQuestion($questionId);
+        $question->solution($answer,$user);
+
+        Yii::$app->session->setFlash('success','Ответ помечен как решение');
+        return $this->redirect('/question/'.$questionId);
+    }
+
+    private function findUser($id)
+    {
+        if ($user = User::findOne($id)) {
+            return $user;
+        }
+        throw new yii\web\NotFoundHttpException();
+    }
 
     private function findQuestion($id)
     {
-        if ($user = Questions::findOne($id)) {
-            return $user;
+        if ($question = Questions::findOne($id)) {
+            return $question;
         }
         throw new yii\web\NotFoundHttpException();
     }
@@ -182,6 +213,14 @@ class DefaultController extends Controller
     {
         if ($tags = Tags::findOne($id)) {
             return $tags;
+        }
+        throw new yii\web\NotFoundHttpException();
+    }
+
+    private function findAnswer($id)
+    {
+        if ($answer = Answers::findOne($id)) {
+            return $answer;
         }
         throw new yii\web\NotFoundHttpException();
     }

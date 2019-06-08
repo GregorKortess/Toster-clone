@@ -99,6 +99,9 @@ use yii\widgets\ActiveForm;
             <a  class="btn btn-default button-delete" href="#" data-QuestionId="<?php echo $question->id ?>" data-id="<?php echo $answer->id; ?>">Удалить ответ</a>
         <?php endif; ?>
 
+        <?php if($currentUser->equals($question->user)): ?>
+                <a class="btn btn-success button-solution" data-UserId="<?php echo $answer->author_id ?>" data-QuestionId="<?php echo $question->id ?>" data-id="<?php echo $answer->id; ?>" href="#">Отметить как решение</a>
+        <?php endif; ?>
 
         <?php endforeach; ?>
         <br><br>
@@ -139,6 +142,10 @@ use yii\widgets\ActiveForm;
 ]); ?>
 
 <?php $this->registerJsFile('@web/js/deleteAnswer.js', [
+    'depends' => JqueryAsset::className(),
+]); ?>
+
+<?php $this->registerJsFile('@web/js/solution.js', [
     'depends' => JqueryAsset::className(),
 ]); ?>
 

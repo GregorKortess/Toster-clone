@@ -2,6 +2,7 @@
 
 namespace frontend\models;
 
+use frontend\modules\question\models\Answers;
 use Yii;
 use yii\db\Connection;
 use yii\helpers\FormatConverter;
@@ -117,6 +118,16 @@ class Questions extends \yii\db\ActiveRecord
         $ids = $redis->smembers("user:{$currentUser->id}:subscriptions");
 
         return self::find()->where(['tag' => $ids])->select('filename,id,question,created_at,difficulty')->orderBy('created_at',SORT_ASC)->all();
+    }
+
+    public function solution(Answers $answer, User $user)
+    {
+        $user->updateCounters(['solutions' => 1]);
+        $answer->status = 1;
+        $answer->save(false);
+
+        self::updateAttributes(['status' => 1]);
+
     }
 
 }
