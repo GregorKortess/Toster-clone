@@ -193,6 +193,24 @@ class DefaultController extends Controller
         return $this->redirect('/question/'.$questionId);
     }
 
+    public function actionRevokeSolution()
+    {
+        Yii::$app->response->format = Response:: FORMAT_JSON;
+
+        $questionId = Yii::$app->request->post('QuestionId');
+        $answerId = Yii::$app->request->post('id');
+        $userId = Yii::$app->request->post('UserId');
+
+        $answer = $this->findAnswer($answerId);
+        $user = $this->findUser($userId);
+
+        $question = $this->findQuestion($questionId);
+        $question->revokeSolution($answer,$user);
+
+        Yii::$app->session->setFlash('warning','Ответ больше не помечен как решение');
+        return $this->redirect('/question/'.$questionId);
+    }
+
     private function findUser($id)
     {
         if ($user = User::findOne($id)) {

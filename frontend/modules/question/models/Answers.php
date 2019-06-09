@@ -56,7 +56,12 @@ class Answers extends \yii\db\ActiveRecord
 
     public  static function countAnswers($id)
     {
-        return Answers::find()->where(['question_id' => $id])->orderBy('created_at')->count();
+        return Answers::find()->where(['question_id' => $id])->count();
+    }
+
+    public static function getSolutions($id)
+    {
+        return Answers::find()->where(['question_id' => $id , 'status' => 1])->orderBy('created_at')->all();
     }
 
     /**

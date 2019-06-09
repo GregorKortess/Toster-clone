@@ -127,7 +127,15 @@ class Questions extends \yii\db\ActiveRecord
         $answer->save(false);
 
         self::updateAttributes(['status' => 1]);
+    }
 
+    public function revokeSolution(Answers $answer, User $user)
+    {
+        $user->updateCounters(['solutions' => -1]);
+        $answer->status = 0;
+        $answer->save(false);
+
+        self::updateAttributes(['status' => 0]);
     }
 
 }
