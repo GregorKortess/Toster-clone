@@ -211,6 +211,8 @@ class DefaultController extends Controller
         return $this->redirect('/question/'.$questionId);
     }
 
+
+
     private function findUser($id)
     {
         if ($user = User::findOne($id)) {

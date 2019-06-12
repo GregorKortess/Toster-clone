@@ -44,6 +44,7 @@ class Tags extends \yii\db\ActiveRecord
         return ArrayHelper::map(self::find()->orderBy('name')->all(), 'id', 'name');
     }
 
+    // Колличество вопросов для тэга
     public function getQuestions()
     {
         return $this->hasMany(Questions::className(),['tag' => 'id'])->count();

@@ -117,8 +117,9 @@ class Questions extends \yii\db\ActiveRecord
 
         $ids = $redis->smembers("user:{$currentUser->id}:subscriptions");
 
-        return self::find()->where(['tag' => $ids])->select('filename,id,question,created_at,difficulty')->orderBy('created_at',SORT_ASC)->all();
+        return self::find()->where(['tag' => $ids])->select('filename,id,question,created_at,difficulty,status')->orderBy(['created_at' => SORT_DESC])->all();
     }
+
 
     public function solution(Answers $answer, User $user)
     {
