@@ -1,8 +1,3 @@
-<p align="center">
-    
-    <h1 align="center">Toster.ru clone</h1>
-    <br>
-</p>
 
 Клон функционала всем известного сайта для программистов Toster.ru (Русский аналог StackOverflow).
 Думаю сайт завершён процентов на 80%
