@@ -1,25 +1,10 @@
-<p align="center">
-    <a href="https://github.com/yiisoft" target="_blank">
-        <img src="https://avatars0.githubusercontent.com/u/993323" height="100px">
-    </a>
-    <h1 align="center">Yii 2 Advanced Project Template</h1>
-    <br>
-</p>
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+Клон функционала всем известного сайта для программистов Toster.ru (Русский аналог StackOverflow).
+Думаю сайт завершён процентов на 80%
+Функционал фронтенда полностью завершён , осталась сделать только дизайн.
+Админ панель пока не разрабатывалась.
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
-
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
-
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
-
-[![Latest Stable Version](https://img.shields.io/packagist/v/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://img.shields.io/packagist/dt/yiisoft/yii2-app-advanced.svg)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
+Возможно позже вернусь к этому проекту , а пока хочется занятся чем то более сложным
 
 DIRECTORY STRUCTURE
 -------------------
@@ -50,6 +35,7 @@ frontend
     config/              contains frontend configurations
     controllers/         contains Web controller classes
     models/              contains frontend-specific model classes
+    modules/             contains frontend modules
     runtime/             contains files generated during runtime
     tests/               contains tests for frontend application
     views/               contains view files for the Web application
