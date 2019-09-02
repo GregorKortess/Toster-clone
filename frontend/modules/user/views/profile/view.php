@@ -27,7 +27,7 @@ use yii\helpers\Url;
 
 <br><br>
 
-<h3 align="center">Решений: <?php echo intval($user->solutions * 100 / $user->answers)  ?>%
+<h3 align="center">Решений: <?php echo intval($user->solutions * 100 / ($user->answers+1))  ?>%
     |Ответов:<?php echo $user->answers ?>
     |Вопросов:<?php echo $user->questions ?>
     |Вклад:<?php echo $user->contribution ?>
